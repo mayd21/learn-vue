@@ -3,12 +3,17 @@ import { initGlobalAPI } from './global-api/index'
 import { isServerRendering } from 'core/util/env'
 import { FunctionalRenderContext } from 'core/vdom/create-functional-component'
 
+// 给Vue和、构造函数增加全局静态方法和属性
+// 属性：config、util、options
+// 方法：set、delete、nextTick、use、mixin、extend、component、directive、filter
 initGlobalAPI(Vue)
 
+// $isServer属性-是否是服务端渲染
 Object.defineProperty(Vue.prototype, '$isServer', {
   get: isServerRendering
 })
 
+// $ssrContext-ssr上下文
 Object.defineProperty(Vue.prototype, '$ssrContext', {
   get () {
     /* istanbul ignore next */
@@ -21,6 +26,7 @@ Object.defineProperty(Vue, 'FunctionalRenderContext', {
   value: FunctionalRenderContext
 })
 
+// 版本号
 Vue.version = '__VERSION__'
 
 export default Vue

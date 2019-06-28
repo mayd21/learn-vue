@@ -17,15 +17,15 @@ function Vue (options) {
   // _init来自initMixin
   this._init(options)
 }
-// 初始化混入
+// 增加 _init方法
 initMixin(Vue)
-// props、methods、data、compute、watch的状态初始化
+// 增加 $props、$data、$set、$delete、$watch方法和属性
 stateMixin(Vue)
-// $on、$once、$off、$emit事件函数初始化
+// 增加 $on、$once、$off、$emit方法
 eventsMixin(Vue)
-// 初始化生命周期
+// 增加 _update、$forceUpdate、$destroy方法
 lifecycleMixin(Vue)
-// $nextTick、_render函数初始化
+// 增加 $nextTick、_render方法
 renderMixin(Vue)
 
 export default Vue
