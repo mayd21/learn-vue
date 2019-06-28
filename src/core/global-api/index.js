@@ -33,7 +33,8 @@ export function initGlobalAPI (Vue: GlobalAPI) {
     }
   }
   // 定义Vue的全局配置，可以在启动之前对相关属性进行修改
-  // 相关属性<a href="https://cn.vuejs.org/v2/api/#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE">参考文档</a>
+  // 全局配置文档
+  // https://cn.vuejs.org/v2/api/#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE
   Object.defineProperty(Vue, 'config', configDef)
 
   // exposed util methods.
@@ -47,7 +48,8 @@ export function initGlobalAPI (Vue: GlobalAPI) {
     defineReactive
   }
 
-  // <a href="https://cn.vuejs.org/v2/api/#%E5%85%A8%E5%B1%80-API">全局API文档</a>
+  // 全局API文档
+  // https://cn.vuejs.org/v2/api/#%E5%85%A8%E5%B1%80-API
 
   // 全局API set、delete、nextTick
   Vue.set = set
@@ -62,7 +64,8 @@ export function initGlobalAPI (Vue: GlobalAPI) {
   }
 
   // 向Vue.options添加资源directives、filters、components
-  // <a href="https://cn.vuejs.org/v2/api/#%E9%80%89%E9%A1%B9-%E8%B5%84%E6%BA%90">资源文档</a>
+  // 资源文档
+  // https://cn.vuejs.org/v2/api/#%E9%80%89%E9%A1%B9-%E8%B5%84%E6%BA%90
   Vue.options = Object.create(null)
   ASSET_TYPES.forEach(type => {
     Vue.options[type + 's'] = Object.create(null)
