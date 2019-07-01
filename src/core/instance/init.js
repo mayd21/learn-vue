@@ -10,8 +10,13 @@ import { initLifecycle, callHook } from './lifecycle'
 import { initProvide, initInjections } from './inject'
 import { extend, mergeOptions, formatComponentName } from '../util/index'
 
+// 自增长ID
 let uid = 0
 
+/**
+ * 增加 _init 方法
+ * 合并options，初始化相关参数并调用 beforeCreate、created 钩子函数
+ */
 export function initMixin (Vue: Class<Component>) {
   Vue.prototype._init = function (options?: Object) {
     const vm: Component = this
@@ -29,6 +34,9 @@ export function initMixin (Vue: Class<Component>) {
     // a flag to avoid this being observed
     vm._isVue = true
     // merge options
+    // _isComponent是内部创建子组件时才会添加为 true 的属性
+    // 判断当前是否有内部子组件，有则进行内部组件的初始化
+    // 不是则进行options融合
     if (options && options._isComponent) {
       // optimize internal component instantiation
       // since dynamic options merging is pretty slow, and none of the
@@ -49,6 +57,8 @@ export function initMixin (Vue: Class<Component>) {
     }
     // expose real self
     vm._self = vm
+    // 对应生命周期图
+    // 进行相关初始化，并调用生命周期钩子函数
     initLifecycle(vm)
     initEvents(vm)
     initRender(vm)
@@ -65,12 +75,16 @@ export function initMixin (Vue: Class<Component>) {
       measure(`vue ${vm._name} init`, startTag, endTag)
     }
 
+    // 存在 el option 则调用装载
     if (vm.$options.el) {
       vm.$mount(vm.$options.el)
     }
   }
 }
 
+/**
+ * 初始化内部组件
+ */
 export function initInternalComponent (vm: Component, options: InternalComponentOptions) {
   const opts = vm.$options = Object.create(vm.constructor.options)
   // doing this because it's faster than dynamic enumeration.
@@ -90,8 +104,16 @@ export function initInternalComponent (vm: Component, options: InternalComponent
   }
 }
 
+/**
+ * 通过递归的方式，找到 Component 这个类的继承链，然后把所有的配置都进行融合
+ * 类的定义参考 /flow/component.js
+ */
 export function resolveConstructorOptions (Ctor: Class<Component>) {
+  // 构造函数的 options 即 Vue.options
+  // 来自 GlobalAPI 的资源，包含 directives、filters、components
   let options = Ctor.options
+  // 有 super 属性，说明 Ctor 是通过 Vue.extend() 方法创建的子类
+  // 递归执行，查找父类
   if (Ctor.super) {
     const superOptions = resolveConstructorOptions(Ctor.super)
     const cachedSuperOptions = Ctor.superOptions
