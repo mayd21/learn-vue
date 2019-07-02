@@ -25,6 +25,7 @@ export function initRender (vm: Component) {
   const options = vm.$options
   const parentVnode = vm.$vnode = options._parentVnode // the placeholder node in parent tree
   const renderContext = parentVnode && parentVnode.context
+  // 处理组件 slot，返回 slot 插槽对象
   vm.$slots = resolveSlots(options._renderChildren, renderContext)
   vm.$scopedSlots = emptyObject
   // bind the createElement fn to this instance
@@ -38,6 +39,7 @@ export function initRender (vm: Component) {
 
   // $attrs & $listeners are exposed for easier HOC creation.
   // they need to be reactive so that HOCs using them are always updated
+  // 定义 $attrs 和 $listeners，为其绑定响应式数据更新
   const parentData = parentVnode && parentVnode.data
 
   /* istanbul ignore else */

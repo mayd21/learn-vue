@@ -117,6 +117,7 @@ export function resolveConstructorOptions (Ctor: Class<Component>) {
   if (Ctor.super) {
     const superOptions = resolveConstructorOptions(Ctor.super)
     const cachedSuperOptions = Ctor.superOptions
+    // 主要是 Vue.extend(options) 和 Vue.mixin(options) 会改变父类的 options
     if (superOptions !== cachedSuperOptions) {
       // super option changed,
       // need to resolve new options.
