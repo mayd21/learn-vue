@@ -1,9 +1,12 @@
+/**
+ * 该文件为整个Vue项目的起始入口文件
+ */
 import Vue from './instance/index'
 import { initGlobalAPI } from './global-api/index'
 import { isServerRendering } from 'core/util/env'
 import { FunctionalRenderContext } from 'core/vdom/create-functional-component'
 
-// 给Vue和、构造函数增加全局静态方法和属性
+// 给Vue构造函数增加全局静态方法和属性
 // 属性：config、util、options
 // 方法：set、delete、nextTick、use、mixin、extend、component、directive、filter
 initGlobalAPI(Vue)
